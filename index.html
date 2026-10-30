@@ -124,12 +124,22 @@
         const ADMIN_PASS = "admin123"; 
         let allAlumniData = [];
 
+        // Check session on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('alumni_admin_logged') === 'true') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                loadAlumniData();
+            }
+        });
+
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const pass = document.getElementById('adminPassword').value;
 
             if (pass === ADMIN_PASS) {
+                localStorage.setItem('alumni_admin_logged', 'true');
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.remove('hidden');
                 loadAlumniData();
@@ -241,6 +251,7 @@
         });
 
         function logout() {
+            localStorage.removeItem('alumni_admin_logged');
             document.getElementById('dashboardSection').classList.add('hidden');
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('adminPassword').value = '';
