@@ -29,15 +29,28 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard Section (Hidden by default) -->
+    <!-- Admin Dashboard Section -->
     <div id="dashboardSection" class="hidden min-h-screen p-4 md:p-8">
-        <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-6 px-6 rounded-2xl shadow-md flex justify-between items-center mb-8">
+        <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-6 px-6 rounded-2xl shadow-md flex justify-between items-center mb-6">
             <h1 class="text-xl md:text-2xl font-bold">Alumni Admin Dashboard</h1>
             <button onclick="logout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-full transition">
                 <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
             </button>
         </header>
 
+        <!-- Search & Filter Controls -->
+        <div class="bg-white rounded-2xl shadow-sm p-4 mb-6 border border-slate-100 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div class="w-full md:w-1/3 relative">
+                <i class="fa-solid fa-search absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="searchInput" onkeyup="filterData()" placeholder="Search by name, membership no..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 text-sm">
+            </div>
+            <div class="w-full md:w-1/3 flex gap-3">
+                <input type="text" id="filterBatch" onkeyup="filterData()" placeholder="Filter by Batch" class="w-1/2 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 text-sm">
+                <input type="text" id="filterDistrict" onkeyup="filterData()" placeholder="Filter by District" class="w-1/2 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 text-sm">
+            </div>
+        </div>
+
+        <!-- Table Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 overflow-x-auto">
             <h2 class="text-lg font-bold mb-4 text-slate-700">Registered Alumni List</h2>
             <table class="w-full text-left border-collapse">
@@ -49,6 +62,7 @@
                         <th class="p-3">Mobile</th>
                         <th class="p-3">District</th>
                         <th class="p-3">Panchayat / Place</th>
+                        <th class="p-3 text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody id="alumniTableBody" class="text-sm divide-y divide-slate-100">
@@ -58,16 +72,57 @@
         </div>
     </div>
 
+    <!-- Edit Modal -->
+    <div id="editModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl">
+            <h3 class="text-xl font-bold mb-4 text-blue-900">Edit Alumni Details</h3>
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="editId">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1 text-slate-600">Membership No</label>
+                        <input type="text" id="editMembershipNo" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1 text-slate-600">Batch</label>
+                        <input type="text" id="editBatch" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">Full Name</label>
+                    <input type="text" id="editFullName" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-600">Mobile Number</label>
+                    <input type="text" id="editMobile" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1 text-slate-600">District</label>
+                        <input type="text" id="editDistrict" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1 text-slate-600">Place</label>
+                        <input type="text" id="editPlace" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-900 text-white rounded-xl text-sm font-semibold">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Supabase Credentials (ശരിയായ anon key ഇവിടെ നൽകുക)
         const SUPABASE_URL = 'https://fpirwwpjlpkhrydpovrd.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwaXJ3d3BqbHBraHJ5ZHBvdnJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzMjcxNjgsImV4cCI6MjEwODkwMzE2OH0.dAW_xrzwbdZ4sxugVXdGqTYKzvym1sR4xav373LY8QY';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Bi-y74T38y3jjrXNvC1A_VKekxyIN';
 
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Admin Password
         const ADMIN_PASS = "admin123"; 
+        let allAlumniData = [];
 
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', async (e) => {
@@ -95,11 +150,16 @@
                 return;
             }
 
+            allAlumniData = data || [];
+            displayData(allAlumniData);
+        }
+
+        function displayData(data) {
             const tbody = document.getElementById('alumniTableBody');
             tbody.innerHTML = '';
 
-            if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">No records found.</td></tr>`;
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">No records found.</td></tr>`;
                 return;
             }
 
@@ -112,10 +172,73 @@
                     <td class="p-3">${row.mobile_number || ''}</td>
                     <td class="p-3">${row.district || ''}</td>
                     <td class="p-3">${row.panchayat_municipality || row.place || ''}</td>
+                    <td class="p-3 text-center">
+                        <button onclick='openEditModal(${JSON.stringify(row)})' class="px-3 py-1.5 bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-lg text-xs font-semibold transition">
+                            <i class="fa-solid fa-pen-to-square mr-1"></i> Edit
+                        </button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
+
+        function filterData() {
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const batchVal = document.getElementById('filterBatch').value.toLowerCase();
+            const districtVal = document.getElementById('filterDistrict').value.toLowerCase();
+
+            const filtered = allAlumniData.filter(row => {
+                const nameMatch = (row.full_name || '').toLowerCase().includes(searchVal) || (row.membership_no || '').toLowerCase().includes(searchVal);
+                const batchMatch = (row.batch || '').toLowerCase().includes(batchVal);
+                const districtMatch = (row.district || '').toLowerCase().includes(districtVal);
+                return nameMatch && batchMatch && districtMatch;
+            });
+
+            displayData(filtered);
+        }
+
+        function openEditModal(row) {
+            document.getElementById('editId').value = row.id;
+            document.getElementById('editMembershipNo').value = row.membership_no || '';
+            document.getElementById('editBatch').value = row.batch || '';
+            document.getElementById('editFullName').value = row.full_name || '';
+            document.getElementById('editMobile').value = row.mobile_number || '';
+            document.getElementById('editDistrict').value = row.district || '';
+            document.getElementById('editPlace').value = row.place || '';
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        const editForm = document.getElementById('editForm');
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editId').value;
+            
+            const updatedData = {
+                membership_no: document.getElementById('editMembershipNo').value,
+                batch: document.getElementById('editBatch').value,
+                full_name: document.getElementById('editFullName').value,
+                mobile_number: document.getElementById('editMobile').value,
+                district: document.getElementById('editDistrict').value,
+                place: document.getElementById('editPlace').value
+            };
+
+            const { error } = await _supabase
+                .from('alumni')
+                .update(updatedData)
+                .eq('id', id);
+
+            if (error) {
+                alert('Failed to update: ' + error.message);
+            } else {
+                alert('Updated successfully!');
+                closeEditModal();
+                loadAlumniData();
+            }
+        });
 
         function logout() {
             document.getElementById('dashboardSection').classList.add('hidden');
