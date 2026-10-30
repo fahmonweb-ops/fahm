@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Association Registration</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <!-- Deep Royal Blue Gradient Header -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-8 px-4 shadow-md text-center">
+        <h1 class="text-2xl md:text-3xl font-bold tracking-wide">അലുമ്നി അസോസിയേഷൻ രജിസ്ട്രേഷൻ</h1>
+        <p class="text-blue-200 text-sm mt-2">സ്റ്റുഡന്റ് യൂണിയൻ അലുമ്നി പോർട്ടൽ</p>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-100">
+            <form id="alumniForm" class="space-y-5">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">മെമ്പർഷിപ്പ് നമ്പർ (Membership No)</label>
+                        <input type="text" id="membershipNo" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Membership No">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">ബാച്ച് (Batch)</label>
+                        <input type="text" id="batch" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="ಉದಾ: 2020-2023">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">പൂർണ്ണമായ പേര് (Name)</label>
+                    <input type="text" id="fullName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="നിങ്ങളുടെ പേര് നൽകുക">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">വിലാസം (Address)</label>
+                    <textarea id="address" rows="2" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="House Name, Street..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">സ്ഥലം (Place)</label>
+                        <input type="text" id="place" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Place">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">പഞ്ചായത്ത് / മുനിസിപ്പാലിറ്റി (Panchayat / Municipality)</label>
+                        <input type="text" id="panchayatMunicipality" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Panchayat / Municipality">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">ജില്ല (District)</label>
+                        <input type="text" id="district" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="District">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">സംസ്ഥാനം (State)</label>
+                        <input type="text" id="state" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="State">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">പിൻകോഡ് (Pincode)</label>
+                        <input type="text" id="pincode" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Pincode">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">മൊബൈൽ നമ്പർ (Mobile Number)</label>
+                    <input type="tel" id="mobileNumber" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="10 digit mobile number">
+                </div>
+
+                <!-- Pill-shaped Main Button -->
+                <div class="pt-4 text-center">
+                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-semibold rounded-full shadow-lg transition transform active:scale-95">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- JavaScript for Supabase Connection & Enter Key Navigation -->
+    <script>
+        // Supabase കോൺഫിഗറേഷൻ
+        const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Enter key focus navigation
+        const formElements = document.querySelectorAll('input, textarea, button');
+        formElements.forEach((element, index) => {
+            element.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && element.tagName !== 'BUTTON') {
+                    e.preventDefault();
+                    const nextElement = formElements[index + 1];
+                    if (nextElement) {
+                        nextElement.focus();
+                    }
+                }
+            });
+        });
+
+        // Form Submission to Supabase
+        const form = document.getElementById('alumniForm');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> സേവ് ചെയ്യുന്നു...';
+
+            const { data, error } = await _supabase
+                .from('alumni')
+                .insert([
+                    {
+                        membership_no: document.getElementById('membershipNo').value,
+                        full_name: document.getElementById('fullName').value,
+                        batch: document.getElementById('batch').value,
+                        address: document.getElementById('address').value,
+                        place: document.getElementById('place').value,
+                        panchayat_municipality: document.getElementById('panchayatMunicipality').value,
+                        district: document.getElementById('district').value,
+                        state: document.getElementById('state').value,
+                        pincode: document.getElementById('pincode').value,
+                        mobile_number: document.getElementById('mobileNumber').value
+                    }
+                ]);
+
+            if (error) {
+                console.error('Error:', error);
+                alert('ക്ഷമിക്കണം, ഡാറ്റ സേവ് ചെയ്യുന്നതിൽ തടസ്സം നേരിട്ടു: ' + error.message);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക';
+            } else {
+                alert('രജിസ്ട്രേഷൻ വിജയകരമായി പൂർത്തിയായി!');
+                form.reset();
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക';
+            }
+        });
+    </script>
+</body>
+</html>
