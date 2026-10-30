@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumni Association Registration</title>
+    <title>Alumni Admin Dashboard</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -13,139 +13,115 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
-    <!-- Deep Royal Blue Gradient Header -->
-    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-8 px-4 shadow-md text-center">
-        <h1 class="text-2xl md:text-3xl font-bold tracking-wide">അലുമ്നി അസോസിയേഷൻ രജിസ്ട്രേഷൻ</h1>
-        <p class="text-blue-200 text-sm mt-2">സ്റ്റുഡന്റ് യൂണിയൻ അലുമ്നി പോർട്ടൽ</p>
-    </header>
-
-    <main class="max-w-2xl mx-auto px-4 py-8">
-        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-100">
-            <form id="alumniForm" class="space-y-5">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">മെമ്പർഷിപ്പ് നമ്പർ (Membership No)</label>
-                        <input type="text" id="membershipNo" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Membership No">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">ബാച്ച് (Batch)</label>
-                        <input type="text" id="batch" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="ಉದಾ: 2020-2023">
-                    </div>
-                </div>
-
+    <!-- Login Section -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full border border-slate-100">
+            <h2 class="text-2xl font-bold text-center text-blue-900 mb-6">Admin Login</h2>
+            <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-semibold mb-1 text-slate-700">പൂർണ്ണമായ പേര് (Name)</label>
-                    <input type="text" id="fullName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="നിങ്ങളുടെ പേര് നൽകുക">
+                    <label class="block text-sm font-semibold mb-1 text-slate-700">Password</label>
+                    <input type="password" id="adminPassword" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Enter admin password">
                 </div>
-
-                <div>
-                    <label class="block text-sm font-semibold mb-1 text-slate-700">വിലാസം (Address)</label>
-                    <textarea id="address" rows="2" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="House Name, Street..."></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">സ്ഥലം (Place)</label>
-                        <input type="text" id="place" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Place">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">പഞ്ചായത്ത് / മുനിസിപ്പാലിറ്റി (Panchayat / Municipality)</label>
-                        <input type="text" id="panchayatMunicipality" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Panchayat / Municipality">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">ജില്ല (District)</label>
-                        <input type="text" id="district" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="District">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">സംസ്ഥാനം (State)</label>
-                        <input type="text" id="state" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="State">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1 text-slate-700">പിൻകോഡ് (Pincode)</label>
-                        <input type="text" id="pincode" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="Pincode">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold mb-1 text-slate-700">മൊബൈൽ നമ്പർ (Mobile Number)</label>
-                    <input type="tel" id="mobileNumber" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-800 transition" placeholder="10 digit mobile number">
-                </div>
-
-                <!-- Pill-shaped Main Button -->
-                <div class="pt-4 text-center">
-                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-semibold rounded-full shadow-lg transition transform active:scale-95">
-                        <i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക
-                    </button>
-                </div>
+                <button type="submit" class="w-full py-3 bg-blue-900 hover:bg-blue-800 text-white font-semibold rounded-full shadow-lg transition">
+                    Login
+                </button>
             </form>
         </div>
-    </main>
+    </div>
 
-    <!-- JavaScript for Supabase Connection & Enter Key Navigation -->
+    <!-- Admin Dashboard Section (Hidden by default) -->
+    <div id="dashboardSection" class="hidden min-h-screen p-4 md:p-8">
+        <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-6 px-6 rounded-2xl shadow-md flex justify-between items-center mb-8">
+            <h1 class="text-xl md:text-2xl font-bold">അലുമ്നി അഡ്മിൻ ഡാഷ്‌ബോർഡ്</h1>
+            <button onclick="logout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-full transition">
+                <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+            </button>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 overflow-x-auto">
+            <h2 class="text-lg font-bold mb-4 text-slate-700">റജിസ്റ്റർ ചെയ്ത അംഗങ്ങളുടെ പട്ടിക</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-700 text-sm border-b">
+                        <th class="p-3">Membership No</th>
+                        <th class="p-3">Name</th>
+                        <th class="p-3">Batch</th>
+                        <th class="p-3">Mobile</th>
+                        <th class="p-3">District</th>
+                        <th class="p-3">Panchayat / Place</th>
+                    </tr>
+                </thead>
+                <tbody id="alumniTableBody" class="text-sm divide-y divide-slate-100">
+                    <!-- Data will load here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
-        // Supabase കോൺഫിഗറേഷൻ
-        const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        // Supabase Credentials
+        const SUPABASE_URL = 'https://fpirwwpjlpkhrydpovrd.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_Bi-y74T38y3jjrXNvC1A_VKekxyIN';
 
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Enter key focus navigation
-        const formElements = document.querySelectorAll('input, textarea, button');
-        formElements.forEach((element, index) => {
-            element.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && element.tagName !== 'BUTTON') {
-                    e.preventDefault();
-                    const nextElement = formElements[index + 1];
-                    if (nextElement) {
-                        nextElement.focus();
-                    }
-                }
-            });
-        });
+        // ** Ivide ninte admin password set cheyyuka **
+        const ADMIN_PASS = "admin123"; 
 
-        // Form Submission to Supabase
-        const form = document.getElementById('alumniForm');
-
-        form.addEventListener('submit', async (e) => {
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> സേവ് ചെയ്യുന്നു...';
+            const pass = document.getElementById('adminPassword').value;
 
-            const { data, error } = await _supabase
-                .from('alumni')
-                .insert([
-                    {
-                        membership_no: document.getElementById('membershipNo').value,
-                        full_name: document.getElementById('fullName').value,
-                        batch: document.getElementById('batch').value,
-                        address: document.getElementById('address').value,
-                        place: document.getElementById('place').value,
-                        panchayat_municipality: document.getElementById('panchayatMunicipality').value,
-                        district: document.getElementById('district').value,
-                        state: document.getElementById('state').value,
-                        pincode: document.getElementById('pincode').value,
-                        mobile_number: document.getElementById('mobileNumber').value
-                    }
-                ]);
-
-            if (error) {
-                console.error('Error:', error);
-                alert('ക്ഷമിക്കണം, ഡാറ്റ സേവ് ചെയ്യുന്നതിൽ തടസ്സം നേരിട്ടു: ' + error.message);
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക';
+            if (pass === ADMIN_PASS) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                loadAlumniData();
             } else {
-                alert('രജിസ്ട്രേഷൻ വിജയകരമായി പൂർത്തിയായി!');
-                form.reset();
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> രജിസ്ട്രേഷൻ പൂർത്തിയാക്കുക';
+                alert('പാസ്‌വേഡ് തെറ്റാണ്!');
             }
         });
+
+        async function loadAlumniData() {
+            const { data, error } = await _supabase
+                .from('alumni')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching data:', error);
+                alert('ഡാറ്റ ലോഡ് ചെയ്യുന്നതിൽ തടസ്സം നേരിട്ടു.');
+                return;
+            }
+
+            const tbody = document.getElementById('alumniTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">ഡാറ്റ ഒന്നും ലഭ്യമല്ല.</td></tr>`;
+                return;
+            }
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-medium">${row.membership_no || ''}</td>
+                    <td class="p-3">${row.full_name || ''}</td>
+                    <td class="p-3">${row.batch || ''}</td>
+                    <td class="p-3">${row.mobile_number || ''}</td>
+                    <td class="p-3">${row.district || ''}</td>
+                    <td class="p-3">${row.panchayat_municipality || row.place || ''}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function logout() {
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('adminPassword').value = '';
+        }
     </script>
 </body>
 </html>
