@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,14 +32,14 @@
     <!-- Admin Dashboard Section (Hidden by default) -->
     <div id="dashboardSection" class="hidden min-h-screen p-4 md:p-8">
         <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-800 text-white py-6 px-6 rounded-2xl shadow-md flex justify-between items-center mb-8">
-            <h1 class="text-xl md:text-2xl font-bold">അലുമ്നി അഡ്മിൻ ഡാഷ്‌ബോർഡ്</h1>
+            <h1 class="text-xl md:text-2xl font-bold">Alumni Admin Dashboard</h1>
             <button onclick="logout()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-full transition">
                 <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
             </button>
         </header>
 
         <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 overflow-x-auto">
-            <h2 class="text-lg font-bold mb-4 text-slate-700">റജിസ്റ്റർ ചെയ്ത അംഗങ്ങളുടെ പട്ടിക</h2>
+            <h2 class="text-lg font-bold mb-4 text-slate-700">Registered Alumni List</h2>
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-slate-100 text-slate-700 text-sm border-b">
@@ -66,7 +66,7 @@
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ** Ivide ninte admin password set cheyyuka **
+        // Admin Password
         const ADMIN_PASS = "admin123"; 
 
         const loginForm = document.getElementById('loginForm');
@@ -79,7 +79,7 @@
                 document.getElementById('dashboardSection').classList.remove('hidden');
                 loadAlumniData();
             } else {
-                alert('പാസ്‌വേഡ് തെറ്റാണ്!');
+                alert('Incorrect password!');
             }
         });
 
@@ -91,15 +91,15 @@
 
             if (error) {
                 console.error('Error fetching data:', error);
-                alert('ഡാറ്റ ലോഡ് ചെയ്യുന്നതിൽ തടസ്സം നേരിട്ടു.');
+                alert('Failed to load data: ' + error.message);
                 return;
             }
 
             const tbody = document.getElementById('alumniTableBody');
             tbody.innerHTML = '';
 
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">ഡാറ്റ ഒന്നും ലഭ്യമല്ല.</td></tr>`;
+            if (!data || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-500">No records found.</td></tr>`;
                 return;
             }
 
